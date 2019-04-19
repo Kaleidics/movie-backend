@@ -8,6 +8,7 @@ const jsonParser = bodyParser.json();
 
 // Post to register a new user
 router.post('/register', jsonParser, (req, res) => {
+    console.log('here at register');
     const requiredFields = ['username', 'password'];
     const missingField = requiredFields.find(field => !(field in req.body));
 
@@ -87,7 +88,7 @@ router.post('/register', jsonParser, (req, res) => {
     lastName = lastName.trim();
 
     return User.find({ username })
-        .count()
+        .countDocuments()
         .then(count => {
             if (count > 0) {
                 // If there is an existing user with the same username

@@ -2,6 +2,7 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 mongoose.Promise = global.Promise;
 
@@ -19,9 +20,16 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.use('*', (req, res) => {
-    return res.status(404).json({ message: 'Not Found' });
-});
+// app.use('*', (req, res) => {
+//     return res.status(404).json({ message: 'Path Not Found' });
+// });
+
+const { router: usersRouter } = require('./users');
+const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use('/users/', usersRouter);
+app.use('/auth/', authRouter);
 
 // Referenced by both runServer and closeServer. closeServer
 // assumes runServer has run and set `server` to a server object
@@ -29,7 +37,7 @@ let server;
 
 function runServer() {
     return new Promise((resolve, reject) => {
-        mongoose.connect(DATABASE_URL, {useNewUrlParser: true}, err => {
+        mongoose.connect(DATABASE_URL, {useCreateIndex: true, useNewUrlParser: true}, err => {
             if (err) {
                 return reject(err);
             }
