@@ -13,12 +13,14 @@ const UserSchema = mongoose.Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    reviews: {type: mongoose.Schema.Types.ObjectId, ref: 'Reviews'}
 });
 
 UserSchema.methods.serialize = function () {
     return {
-        username: this.username || ''
+        username: this.username || '',
+        reviews: this.reviews || ''
     };
 };
 
