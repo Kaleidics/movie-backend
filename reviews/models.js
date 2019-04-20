@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const ReviewSchema = mongoose.Schema({
-    Reviewer: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+    reviewer: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     reviewTitle: String,
     reviewText: String,
     reviewScore: Number
