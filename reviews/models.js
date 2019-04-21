@@ -4,10 +4,17 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const ReviewSchema = mongoose.Schema({
+    movieId: String,
     reviewer: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-    reviewTitle: String,
+    reviewTitle: {
+        type: String,
+        required: true
+    },
     reviewText: String,
-    reviewScore: Number
+    reviewScore: {
+        type: Number,
+        required: true
+    }
     
 });
 
@@ -17,7 +24,6 @@ ReviewSchema.methods.serialize = function () {
         reviewTitle: this.reviewTitle || '',
         reviewTest: this.reviewText || '',
         reviewScore: this.reviewScore || '',
-        
     };
 };
 
