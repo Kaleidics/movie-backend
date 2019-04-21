@@ -73,9 +73,10 @@ router.post('/:id', [jsonParser, jwtAuth], (req, res) => {
 
 //navigating from user profile, where id is the unique id of the review not the movie
 router.put('/update/:id', [jsonParser, jwtAuth], (req, res) => {
-    Review.findByIdAndUpdate(req.params.id,
+    Review.findOneAndUpdate(req.params.id,
         { $set: { ...req.body } }, { new: true })
         .then(review => {
+            console.log(review);
             res.status(203).json(review);
         })
         .catch(err => res.status(500).json({message: err}));

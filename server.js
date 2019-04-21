@@ -6,6 +6,8 @@ const passport = require('passport');
 const bodyParser = require('body-parser');
 
 mongoose.Promise = global.Promise;
+mongoose.set('useFindAndModify', false);
+
 
 const { PORT, DATABASE_URL } = require('./config');
 const app = express();
