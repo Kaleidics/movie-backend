@@ -4,7 +4,10 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const ReviewSchema = mongoose.Schema({
-    movieId: String,
+    movieId: {
+        type: Number,
+        required: true
+    },
     reviewer: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     reviewTitle: {
         type: String,
