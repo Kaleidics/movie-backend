@@ -24,6 +24,7 @@ router.get('/user/:id', (req, res) => {
         .then(review => res.status(200).json(review))
         .catch(err => res.status(500).json({message: 'Internal server error'}));
 });
+
 //view all reviews for a single move
 router.get('/movie/:id', (req, res) => {
     console.log('triggered the route', req.params.id);
@@ -36,14 +37,14 @@ router.get('/movie/:id', (req, res) => {
 router.get('/single/:id', (req, res) => {
     console.log(req.params.id);
     return Review.findOne({_id: req.params.id})
-        .populate('reviewer', 'username')
+        .populate('reviewer', 'displayname')
         .then(function (review) {
             res.status(200).json(review);
         })
         .catch(err => res.status(500).json({message: err}));
 });
 
-//make a new review where id is the movie unique id being reviewed
+//make a new review where id is the id the is the id of the movie being reviewed
 router.post('/:id', [jsonParser, jwtAuth], (req, res) => {
     console.log(req.user.username);
     User.findOne({ username: req.user.username})
@@ -71,7 +72,7 @@ router.post('/:id', [jsonParser, jwtAuth], (req, res) => {
         });
 });
 
-//navigating from user profile, where id is the unique id of the review not the movie
+//navigating from user profile, where id is the unique id of the review, not the movie
 router.put('/update/:id', [jsonParser, jwtAuth], (req, res) => {
     Review.findOneAndUpdate(req.params.id,
         { $set: { ...req.body } }, { new: true })
@@ -82,7 +83,7 @@ router.put('/update/:id', [jsonParser, jwtAuth], (req, res) => {
         .catch(err => res.status(500).json({message: err}));
 });
 
-//delete a review where id the id of the review
+//delete a review where id is the id of the review
 router.delete('/delete/:id', jwtAuth, (req, res) => {
     Review.findByIdAndRemove(req.params.id)
         .then(review => res.status(204).end())
