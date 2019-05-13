@@ -29,6 +29,7 @@ app.use(function (req, res, next) {
 
 const { router: usersRouter } = require('./users');
 const { router: reviewRouter } = require('./reviews');
+const { router: movieRouter } = require('./movieApi');
 const { router: authRouter, localStrategy, jwtStrategy } = require('./auth');
 
 passport.use(localStrategy);
@@ -38,6 +39,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/users/', usersRouter);
 app.use('/auth/', authRouter);
 app.use('/review/', reviewRouter);
+app.use('/3api/', movieRouter)
 
 
 // Referenced by both runServer and closeServer. closeServer

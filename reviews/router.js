@@ -93,4 +93,4 @@ router.delete('/delete/:id', jwtAuth, (req, res) => {
         });
 });
 
-module.exports = {router};
+module.exports = { router };
