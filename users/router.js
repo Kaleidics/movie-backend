@@ -7,7 +7,7 @@ const jsonParser = bodyParser.json();
 
 
 // Post to register a new user
-router.post('/register', jsonParser, (req, res) => {
+router.post('/profile', jsonParser, (req, res) => {
     console.log('here at register');
     const requiredFields = ['username', 'password'];
     const missingField = requiredFields.find(field => !(field in req.body));
@@ -21,7 +21,7 @@ router.post('/register', jsonParser, (req, res) => {
         });
     }
 
-    const stringFields = ['username', 'password', 'firstName', 'lastName'];
+    const stringFields = ['username', 'password', 'displayname'];
     const nonStringField = stringFields.find(
         field => field in req.body && typeof req.body[field] !== 'string'
     );
@@ -50,6 +50,9 @@ router.post('/register', jsonParser, (req, res) => {
     }
 
     const sizedFields = {
+        displayname: {
+            min: 2
+        },
         username: {
             min: 2
         },
@@ -82,11 +85,11 @@ router.post('/register', jsonParser, (req, res) => {
         });
     }
 
-    let { username, password, firstName = '', lastName = '' } = req.body;
+    let { displayname, username, password } = req.body;
    
-    firstName = firstName.trim();
-    lastName = lastName.trim();
-
+    //Display name will not be checked against DB, unlike username it is not an account identifier 
+    //Does not need to be unique, so allows the user to be known by whatever name they prefer
+    
     return User.find({ username })
         .countDocuments()
         .then(count => {
@@ -104,10 +107,10 @@ router.post('/register', jsonParser, (req, res) => {
         })
         .then(hash => {
             return User.create({
+                displayname,
                 username,
-                password: hash,
-                firstName,
-                lastName
+                password: hash
+        
             });
         })
         .then(user => {

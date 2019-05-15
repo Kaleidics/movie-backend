@@ -7,8 +7,7 @@ mongoose.Promise = global.Promise;
 const UserSchema = mongoose.Schema({
     displayname: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     username: {
         type: String,
@@ -24,7 +23,8 @@ const UserSchema = mongoose.Schema({
 
 UserSchema.methods.serialize = function () {
     return {
-        displayname: this.display || '',
+        displayname: this.displayname || '',
+        username: this.username || '',
         reviews: this.reviews || ''
     };
 };
