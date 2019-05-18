@@ -8,6 +8,7 @@ const ReviewSchema = mongoose.Schema({
         type: Number,
         required: true
     },
+    moviePoster: String,
     reviewer: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     reviewTitle: {
         type: String,
@@ -23,6 +24,8 @@ const ReviewSchema = mongoose.Schema({
 
 ReviewSchema.methods.serialize = function () {
     return {
+        movieId: this.movieId || '',
+        moviePoster: this.moviePoster || '',
         reviewer: this.Reviewer || '',
         reviewTitle: this.reviewTitle || '',
         reviewTest: this.reviewText || '',
