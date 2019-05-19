@@ -21,6 +21,7 @@ router.get('/all', (req, res) => {
 router.get('/user/:id', (req, res) => {
     console.log('triggered the route', req.params.id);
     return Review.find({'reviewer': req.params.id})
+        .populate('reviewer', 'displayname')
         .then(review => res.status(200).json(review))
         .catch(err => res.status(500).json({message: 'Internal server error'}));
 });
@@ -50,9 +51,12 @@ router.post('/:id', [jsonParser, jwtAuth], (req, res) => {
     User.findOne({ username: req.user.username})
         .then(user => {
             console.log(req.body);
-            const {reviewTitle, reviewText, reviewScore} = req.body;
+            const {title, genre_ids, poster_path, reviewTitle, reviewText, reviewScore} = req.body;
             Review.create({
                 movieId: req.params.id,
+                title: title,
+                genre_ids: genre_ids,
+                poster_path: poster_path,
                 reviewer: user._id,
                 reviewTitle: reviewTitle,
                 reviewText: reviewText,
@@ -86,7 +90,10 @@ router.put('/update/:id', [jsonParser, jwtAuth], (req, res) => {
 //delete a review where id is the id of the review
 router.delete('/delete/:id', jwtAuth, (req, res) => {
     Review.findByIdAndRemove(req.params.id)
-        .then(review => res.status(204).end())
+        .then(review => {
+            console.log(review);
+            res.status(204).json(review);
+        })
         .catch(err => {
             console.error(4, err);
             res.status(500).json({ message: "Internal server error" });
