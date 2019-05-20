@@ -54,6 +54,7 @@ router.get('/single/:id', (req, res) => {
 router.post('/:id', [jsonParser, jwtAuth], (req, res) => {
     console.log(req.user.username);
     User.findOne({ username: req.user.username})
+        .populate('reviewer', 'displayname')
         .then(user => {
             console.log(req.body);
             const {title, genre_ids, poster_path, reviewTitle, reviewText, reviewScore} = req.body;
@@ -62,7 +63,7 @@ router.post('/:id', [jsonParser, jwtAuth], (req, res) => {
                 title: title,
                 genre_ids: genre_ids,
                 poster_path: poster_path,
-                reviewer: user._id,
+                reviewer: user,
                 reviewTitle: reviewTitle,
                 reviewText: reviewText,
                 reviewScore: reviewScore
