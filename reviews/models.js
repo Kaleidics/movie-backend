@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const ReviewSchema = mongoose.Schema({
+    createdAt: { type: Date, default: Date.now },
     movieId: {
         type: Number,
         required: true
@@ -26,6 +27,7 @@ const ReviewSchema = mongoose.Schema({
 
 ReviewSchema.methods.serialize = function () {
     return {
+        createdAt: this.createdAt || '',
         movieId: this.movieId || '',
         title: this.title || '',
         genre_ids: this.genre_ids || '',

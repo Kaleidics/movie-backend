@@ -13,6 +13,7 @@ const jwtAuth = passport.authenticate('jwt', { session: false });
 //view all reviews
 router.get('/all', (req, res) => {
     return Review.find()
+        .sort('-createdAt')
         .then(review => res.status(200).json(review))
         .catch(err => res.status(500).json({message: 'Internal server error'}));
 });
@@ -20,16 +21,19 @@ router.get('/all', (req, res) => {
 //view all reviews written by specific user
 router.get('/user/:id', (req, res) => {
     console.log('triggered the route', req.params.id);
-    return Review.find({'reviewer': req.params.id})
+    return Review.find({ 'reviewer': req.params.id })
+        .sort('-createdAt')
         .populate('reviewer', 'displayname')
         .then(review => res.status(200).json(review))
         .catch(err => res.status(500).json({message: 'Internal server error'}));
 });
 
-//view all reviews for a single move
+//view all reviews for a single movie
 router.get('/movie/:id', (req, res) => {
     console.log('triggered the route', req.params.id);
-    return Review.find({'movieId': req.params.id})
+    return Review.find({ 'movieId': req.params.id })
+        .sort('-createdAt')
+        .populate('reviewer', 'displayname')
         .then(review => res.status(200).json(review))
         .catch(err => res.status(500).json({message: 'Internal server error'}));
 });
