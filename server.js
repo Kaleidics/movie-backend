@@ -23,10 +23,6 @@ app.use(function (req, res, next) {
     next();
 });
 
-// app.use('*', (req, res) => {
-//     return res.status(404).json({ message: 'Path Not Found' });
-// });
-
 const { router: usersRouter } = require('./users');
 const { router: reviewRouter } = require('./reviews');
 const { router: movieRouter } = require('./movieApi');
@@ -40,6 +36,10 @@ app.use('/users/', usersRouter);
 app.use('/auth/', authRouter);
 app.use('/review/', reviewRouter);
 app.use('/3api/', movieRouter)
+
+// app.use('*', (req, res) => {
+//     return res.status(404).json({ message: 'Path Not Found' });
+// });
 
 
 // Referenced by both runServer and closeServer. closeServer
