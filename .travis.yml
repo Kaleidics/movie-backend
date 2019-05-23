@@ -1,2 +1,9 @@
 language: node_js
 node_js: node
+deploy:
+  provider: heroku
+  api_key:
+    secure: qwxBH/89r60ycNFlB3Ioy2ZJoeIez6Jtr7p+oq9Oup/yXKCTpNoyZ2uC90M+gFjWLYa9ONO7n9MrA+3OJoULT6t5vXc/uDWAc1G+v08iPkq12bvW/AWsA2Y02NxHyum8Yz1r08UMqwEuIr/1lZtTIeNlJJPvSTQkng/8pvd3kzw+QasrjuSehlHeweLmsoBaoC69Pbxuu4D4IQGLYwu4JpcBIVy3AaljAx97OwSfVS6qO7Aw/aj28t9dw/s4yNsobYnoyhJC7lrirZIqTz+7x0uan+y9jI7wCNoYNQb+yF3XFADnKehm2g5XUxQ2/tp7XCjpYZsOoQp7pvla383A3qFxZEzyQ7XSp4vhIhoqhu2OVNDHOEgDO4Krvcj5111uAm+jYF2GMwK4qmXs9I8LPZeGNQbu3dcgXaj9bXO3QnL2L4ebann7dWcvVHjNcrxM/boJ3OsiH48ODsVWUucZDyN0svO0Iz3hP+2S/7o3TSuXWRntBlKZ7ZRUSItM2L8BLwjAepv7KcWumklKWyqjFJZHGVCPedlcvToPy4wFl8MayjX/BcfmyWHhbH3xw0yOY3xPv5HvsUEIbziPyBChII0uJDi0mbUlxUzENBsWCxup0yJxFbb9mA03IGG35FMIKXCbcxl+isYj/teMDWzM43BLwtWjCMniPIOgRbxBJRk=
+  app: movie-backend
+  on:
+    repo: Kaleidics/movie-backend
